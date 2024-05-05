@@ -83,5 +83,15 @@ bool addTask ( taskList* list, Task* task )
 }
 
 bool removeTask ( taskList* list, Task* task ) {
+    Task** target = list->tasks;
     
+    while ( *target ) {
+        if ( strcmp(( *target )->name, task->name ) == 0 ) {
+            destroyTask( task );
+            return true;
+        }
+        ++target;
+    }
+
+    return false;
 }
