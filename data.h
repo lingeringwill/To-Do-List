@@ -48,4 +48,7 @@ void destroyList( taskList* list );
     will add a task to the taskList
 */
 bool addTask ( taskList* list, Task* task );
+
+bool removeTask ( taskList* list, Task* task );
+
 #endif
