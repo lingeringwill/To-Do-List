@@ -82,12 +82,13 @@ bool addTask ( taskList* list, Task* task )
 
 }
 
-bool removeTask ( taskList* list, Task* task ) {
+bool removeTask ( taskList* list, Task* task ) 
+{
     // points to the pointers
     Task** target = list->tasks;
     // while the pointer to the task is not null
     while ( *target ) {
-        if ( strcmp(( *target )->name, task->name ) == 0 ) {
+        if ( strcmp( ( *target )->name, task->name ) == 0 ) {
             // the refernce pointing to the data is gone, but not the data itself
             destroyTask( *target );
            
@@ -104,11 +105,34 @@ bool removeTask ( taskList* list, Task* task ) {
             *temp = NULL;
 
             list->size--;
-            
+
             return true;
         }
         ++target;
     }
 
     return false;
+}
+
+Task* findTaskByName( taskList* list, char * name ) 
+{
+    // first create a target
+
+    Task** target = list->tasks;
+    
+    
+    while ( *target ) {
+        
+        if ( strcmp( ( *target )->name, name ) == 0 ) {
+            return *target;
+        }
+
+        ++target;
+    }
+
+    return NULL;
+}
+
+void sortTasks( taskList * list, int ( *compare )( void const *a, void const *b ) ) {
+    qsort( list, list->size, sizeof( list ), compare );
 }

@@ -51,4 +51,7 @@ bool addTask ( taskList* list, Task* task );
 
 bool removeTask ( taskList* list, Task* task );
 
+// finds a task in the task list by its name
+Task findTaskByName( taskList* list, char* name );
+
 #endif
