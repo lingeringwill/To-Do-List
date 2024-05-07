@@ -83,11 +83,28 @@ bool addTask ( taskList* list, Task* task )
 }
 
 bool removeTask ( taskList* list, Task* task ) {
+    // points to the pointers
     Task** target = list->tasks;
-    
+    // while the pointer to the task is not null
     while ( *target ) {
         if ( strcmp(( *target )->name, task->name ) == 0 ) {
-            destroyTask( task );
+            // the refernce pointing to the data is gone, but not the data itself
+            destroyTask( *target );
+           
+           //we need to close the gap created by destroying the task in the list
+           // target is now set pointing to pointer of the task we removed
+           // create a temp variable pointing to that null variable
+            Task** temp = target;
+
+            while ( *( temp ) + 1 ) {
+                *temp = *( temp ) + 1;
+                ++temp;
+            } 
+
+            *temp = NULL;
+
+            list->size--;
+            
             return true;
         }
         ++target;
