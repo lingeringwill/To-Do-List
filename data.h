@@ -17,41 +17,21 @@ typedef struct task {
     Type type;
     char* note;
     int priority;
+   struct task* next;
 
 } Task;
 
-typedef struct taskList {
-    int size;
-    Task** tasks;
 
-    
-} taskList;
 /**
 *   returns a pointer to a new task with a name 
 */
 Task* makeTask( char* name, Type type, char* note, int priority );
 
 /**
-*   creates a new list
-*/
-taskList* makeList(); 
-/**
 *   will destroy a task once the program is done with it 
 */
 void destroyTask( Task* task );
 
-/**
-    will destroy a list once the program is done with it 
-*/
-void destroyList( taskList* list );
-/**
-    will add a task to the taskList
-*/
-bool addTask ( taskList* list, Task* task );
 
-bool removeTask ( taskList* list, Task* task );
-
-// finds a task in the task list by its name
-Task findTaskByName( taskList* list, char* name );
 
 #endif
