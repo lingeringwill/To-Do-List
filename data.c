@@ -91,6 +91,8 @@ void printList ( Task *head ) {
         // moving on to the next one until it's a null value
         temp = temp->next;
     }
+
+    free( typeName );
     
 }
 
