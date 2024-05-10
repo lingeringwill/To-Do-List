@@ -1,7 +1,5 @@
 #include "data.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+
 
 
 #define INITIAL_LIST_SIZE 5
@@ -53,12 +51,47 @@ void insertAtEnd( Task **head, Task *node ) {
 void freeList( Task* head ) {
     
     Task* temp = head;
-    
-    if ( temp == NULL ) {
+
+    if ( temp == NULL )
         return;
-    }
+
     freeList( temp->next );
     free( temp );
+}
+
+char* typeToString( Type type ) {
+    char* temp = "";
+    switch ( type ) {
+        case TODO: temp = malloc(strlen("TO-DO" ) + 1 );
+        strcpy( temp, "TO-DO");
+        break;
+        case DOING: temp = malloc ( strlen ( "DOING" ) + 1 );
+        strcpy( temp, "DOING");
+        break;
+        case COMPLETE: temp = malloc ( strlen( "COMPLETE" ) + 1 );
+        strcpy( temp,  "COMPLETE" );
+        break;
+    }
+
+    return temp;
+
+    
+}
+
+void printList ( Task *head ) {
+    // We don't want  shift the actual head, just start there
+    Task* temp = head;
+    // need this in variable form to free later
+    char* typeName = typeToString( temp->type );
+    while ( temp != NULL ) {
+        //we want to print out the headings 
+        printf( "%6s %6s %6s %6s\n", "Name |", "Type |", "Note |", "Priority |" );
+        // now we want to print out the values that matter 
+        printf("%6s %6s %6s %6d\n", temp->name, typeName, temp->note, temp->priority );
+        // moving on to the next one until it's a null value
+        temp = temp->next;
+    }
+    
 }
 
 void destroyTask( Task* task ) {

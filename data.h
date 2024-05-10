@@ -1,6 +1,9 @@
 #ifndef data
 #define data
 #include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 /**
     this is where I'll have my tasks and taskList will be defined
 */
@@ -32,6 +35,11 @@ Task* makeTask( char* name, Type type, char* note, int priority );
 */
 void destroyTask( Task* task );
 
+void insertAtBeginning( Task **head, Task *node );
 
+void insertAtEnd( Task **head, Task *node );
 
+void freeList( Task* head );
+
+void printList( Task* head );
 #endif
