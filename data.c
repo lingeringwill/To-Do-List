@@ -1,7 +1,5 @@
 #include "data.h"
 
-
-
 #define INITIAL_LIST_SIZE 5
 //creates new task node for the linkedList
 Task* makeTask( char* name, Type type, char* note, int priority )
@@ -60,12 +58,12 @@ void freeList( Task* head ) {
 }
 
 char* typeToString( Type type ) {
-    char* temp = "";
+    char* temp;
     switch ( type ) {
         case TODO: temp = malloc(strlen("TO-DO" ) + 1 );
         strcpy( temp, "TO-DO");
         break;
-        case DOING: temp = malloc ( strlen ( "DOING" ) + 1 );
+        case DOING: temp = malloc( strlen ( "DOING" ) + 1 );
         strcpy( temp, "DOING");
         break;
         case COMPLETE: temp = malloc ( strlen( "COMPLETE" ) + 1 );
@@ -79,21 +77,63 @@ char* typeToString( Type type ) {
 }
 
 void printList ( Task *head ) {
+
+    if ( head == NULL ) {
+        printf( "nada" );
+    }
     // We don't want  shift the actual head, just start there
     Task* temp = head;
-    // need this in variable form to free later
-    char* typeName = typeToString( temp->type );
+    
     while ( temp != NULL ) {
+        // need this in variable form to free later
+        char* typeName = typeToString( temp->type );
         //we want to print out the headings 
-        printf( "%6s %6s %6s %6s\n", "Name |", "Type |", "Note |", "Priority |" );
+        printf( "%-10s %-10s %-10s %-10s\n", "Name     |", "Type     |", "Note     |", "Priority     |" );
         // now we want to print out the values that matter 
-        printf("%6s %6s %6s %6d\n", temp->name, typeName, temp->note, temp->priority );
+        printf("%-10s %-10s %-10s %-10d\n", temp->name, typeName, temp->note, temp->priority );
         // moving on to the next one until it's a null value
         temp = temp->next;
+        printf("\n");
+        free( typeName );
     }
 
-    free( typeName );
+   
     
+}
+
+bool removeTask( Task** head, char* name ) {
+    Task* temp = *head;
+
+    if ( temp == NULL ) {
+        return false;
+    }
+
+     //looking at the head, if it's the only one there and it matches, remove it
+    if ( strcmp( temp->name, name ) == 0 && temp->next == NULL ) {
+        *head = NULL;
+        free( temp );
+        return true;
+    } else if ( strcmp( temp->name, name ) == 0 ) {
+        Task* temp2 = temp->next;
+        *head =  temp2;
+        
+        free( temp );   
+        return true;    
+    }
+
+    //now in the case that the value we want to remove isn't the head
+    while ( temp ) {
+        if ( strcmp( temp->next->name, name ) == 0 ) {
+           Task* temp2 = temp->next->next;
+           free( temp->next );
+           temp->next = temp2;
+           return true;
+        }
+        temp = temp->next;
+    } 
+
+
+    return false;
 }
 
 void destroyTask( Task* task ) {

@@ -42,4 +42,6 @@ void insertAtEnd( Task **head, Task *node );
 void freeList( Task* head );
 
 void printList( Task* head );
+
+bool removeTask( Task** head, char* name );
 #endif
