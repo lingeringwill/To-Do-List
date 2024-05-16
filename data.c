@@ -2,7 +2,7 @@
 
 #define INITIAL_LIST_SIZE 5
 //creates new task node for the linkedList
-Task* makeTask( char* name, Type type, char* note, int priority )
+Task* makeTask( char* name, char *type, char* note, int priority )
 {
     //allocates a node onto the stack
     Task* task = ( Task* ) malloc( sizeof( Task ) );
@@ -12,9 +12,10 @@ Task* makeTask( char* name, Type type, char* note, int priority )
         exit( 1 );
     }
 
-    task->name = name;
-    task->type = type;
-    task->note = note;
+    
+    task->name = strdup( name );
+    task->type = stringToType( type );
+    task->note = strdup( note );
     task->priority = priority;
     //sets the next value to be null
     task->next = NULL;
@@ -30,6 +31,7 @@ void insertAtBeginning( Task **head, Task *node ) {
 
 void insertAtEnd( Task **head, Task *node ) {
 
+    
    if ( *head == NULL ) {
     *head = node;
     return;
@@ -76,15 +78,28 @@ char* typeToString( Type type ) {
     
 }
 
+Type stringToType( char* str ) {
+    if ( strcmp( str, "todo") == 0 ) {
+        return TODO;
+    } else if ( strcmp ( str, "doing" ) == 0 ) {
+        return DOING;
+    } else if ( strcmp ( str, "complete" ) == 0 ) {
+        return COMPLETE;
+    } 
+    printf( "fatal error");
+    exit(1);
+}
+
 void printList ( Task *head ) {
 
     if ( head == NULL ) {
-        printf( "nada" );
+        printf( "nada\n" );
     }
     // We don't want  shift the actual head, just start there
     Task* temp = head;
     
     while ( temp != NULL ) {
+        
         // need this in variable form to free later
         char* typeName = typeToString( temp->type );
         //we want to print out the headings 
@@ -135,6 +150,8 @@ bool removeTask( Task** head, char* name ) {
 
     return false;
 }
+
+
 
 void destroyTask( Task* task ) {
     free( task );

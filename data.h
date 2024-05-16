@@ -28,7 +28,7 @@ typedef struct task {
 /**
 *   returns a pointer to a new task with a name 
 */
-Task* makeTask( char* name, Type type, char* note, int priority );
+Task* makeTask( char* name, char *type, char* note, int priority );
 
 /**
 *   will destroy a task once the program is done with it 
@@ -44,4 +44,8 @@ void freeList( Task* head );
 void printList( Task* head );
 
 bool removeTask( Task** head, char* name );
+
+char* typeToString ( Type type );
+
+Type stringToType( char* str );
 #endif
